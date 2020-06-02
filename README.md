@@ -1,4 +1,4 @@
-# JuneJam
+# AstroSoar
 Name is a placeholder for now
 
 # Getting set up
