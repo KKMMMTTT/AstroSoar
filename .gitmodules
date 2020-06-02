@@ -1,0 +1,3 @@
+[submodule "Annex"]
+	path = Annex
+	url = http://github.com/MatthewChrobak/Annex.git
