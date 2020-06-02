@@ -11,7 +11,7 @@ You will need
 This repo contains a submodule. You can clone the submodules by either passing the ``--recursive`` flag while cloning the repo, or by running ``git submodule update``
 
 
-- ``git clone --recursive https://github.com/KKMMMTTT/JuneJam.git``
+- ``git clone --recursive https://github.com/KKMMMTTT/AstroSoar.git``
 
 or
 
