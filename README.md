@@ -16,3 +16,13 @@ This repo contains a submodule. You can clone the submodules by either passing t
 or
 
 - ``git submodule update``
+
+
+## Pulling Changes
+To pull changes from submodules, use
+
+```git submodule update --recursive```
+
+or to pull while updating submodules use
+
+```git pull --recurse-submodules```
