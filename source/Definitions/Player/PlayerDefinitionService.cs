@@ -12,7 +12,7 @@ namespace Game.Definitions.Player
         }
 
         public IEnumerable<string> GetSaveFiles() {
-            string path = Path.Combine(Paths.ApplicationPath, "definitions/saves/");
+            var path = Path.Combine(Paths.ApplicationPath, "Definitions/Saves/");
             Directory.CreateDirectory(path);
             foreach (var file in Directory.GetFiles(path, "*.json")) {
                 yield return new FileInfo(file).Name[0..^5];

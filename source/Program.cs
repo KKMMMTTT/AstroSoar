@@ -1,7 +1,7 @@
 ﻿using Annex;
 using Annex.Assets;
 using Game.Scenes.Demo;
-using Game.Scenes.MainMenu;
+using Game.Scenes.World;
 using System.IO;
 using static Annex.Paths;
 
@@ -11,14 +11,13 @@ namespace Game
     {
 
         private static void Main(string[] args) {
-
             AnnexGame.Initialize();
-            Debug.PackageAssetsToBinaryFrom(AssetType.Texture, Path.Combine(SolutionFolder, "assets/textures/"));
-            Debug.PackageAssetsToBinaryFrom(AssetType.Audio, Path.Combine(SolutionFolder, "assets/music/"));
-            Debug.PackageAssetsToBinaryFrom(AssetType.Font, Path.Combine(SolutionFolder, "assets/font/"));
+            Debug.PackageAssetsToBinaryFrom(AssetType.Texture, Path.Combine(SolutionFolder, "Assets/Textures/"));
+            Debug.PackageAssetsToBinaryFrom(AssetType.Audio, Path.Combine(SolutionFolder, "Assets/Music/"));
+            Debug.PackageAssetsToBinaryFrom(AssetType.Font, Path.Combine(SolutionFolder, "Assets/Fonts/"));
 
-            Debug.AddDebugOverlayCommand("demo", args => {
-                switch (args[0]) {
+            Debug.AddDebugOverlayCommand("demo", debugArgs => {
+                switch (debugArgs[0]) {
                     case "convo":
                         ServiceProvider.SceneService.LoadNewScene<ConversationDemoScene>();
                         break;
@@ -28,7 +27,7 @@ namespace Game
                 }
             });
 
-            AnnexGame.Start<MainMenu>();
+            AnnexGame.Start<WorldScene>();
         }
     }
 }
