@@ -7,7 +7,7 @@ namespace Game
     {
         private static void Main(string[] args) {
             AnnexGame.Initialize();
-            AnnexGame.Start<MainMenu>();
+            AnnexGame.Start<Scenes.MainMenu.MainMenu>();
         }
     }
 }
