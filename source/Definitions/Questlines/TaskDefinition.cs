@@ -25,7 +25,11 @@ namespace Game.Definitions.Questlines
         /// Every time you signal, check if the flag is the same as the one for the task.
         /// If it is, then the increment would get added to the active questline's sum.
         /// When the sum == Goal, you know the task is complete.
-        public string Flag { get; set; }
+        private string? _flag;
+        public string Flag {
+            get => this._flag ?? string.Empty;
+            set => this._flag = value;
+        }
         public long Goal { get; set; }
     }
 }
