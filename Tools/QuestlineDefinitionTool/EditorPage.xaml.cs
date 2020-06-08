@@ -3,6 +3,7 @@ using Game.Questlines;
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 
 namespace QuestlineDefinitionTool
 {
@@ -39,15 +40,13 @@ namespace QuestlineDefinitionTool
             }
             this.txtStepDescription.Text = step.Description;
 
-            foreach (var task in step.Task) {
-                this.grdTasks.Items.Add(task);
-            }
-
             if (this.CurrentlySelectedStep != null) {
                 this.grdStepEditor.IsEnabled = true;
             } else {
                 this.grdStepEditor.IsEnabled = false;
             }
+
+            this.grdTasks.ItemsSource = this.CurrentlySelectedStep.Task;
         }
 
         private void RefreshStepList() {
@@ -138,6 +137,33 @@ namespace QuestlineDefinitionTool
 
             RefreshStepList();
             this.lstSteps.SelectedIndex = destination;
+        }
+
+        private void AddTask(object sender, RoutedEventArgs e) {
+            var newTasks = new TaskDefinition[this.CurrentlySelectedStep.Task.Length + 1];
+            for (int i = 0; i < this.CurrentlySelectedStep.Task.Length; i++) {
+                newTasks[i] = this.CurrentlySelectedStep.Task[i];
+            }
+            newTasks[^1] = new TaskDefinition();
+
+            this.CurrentlySelectedStep.Task = newTasks;
+            this.grdTasks.ItemsSource = newTasks;
+        }
+
+        private void RemoveTask(object sender, RoutedEventArgs e) {
+
+            int insertIndex = 0;
+            var newTasks = new TaskDefinition[this.CurrentlySelectedStep.Task.Length - this.grdTasks.SelectedItems.Count];
+
+            foreach (var task in this.CurrentlySelectedStep.Task) {
+                if (this.grdTasks.SelectedItems.Contains(task)) {
+                    continue;
+                }
+                newTasks[insertIndex++] = task;
+            }
+
+            this.CurrentlySelectedStep.Task = newTasks;
+            this.grdTasks.ItemsSource = newTasks;
         }
 
         public class StepListboxItem : Label

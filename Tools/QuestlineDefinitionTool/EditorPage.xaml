@@ -85,6 +85,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" />
@@ -102,12 +103,27 @@
             <DataGrid Grid.Row="1"
                       Grid.ColumnSpan="2"
                       Grid.Column="0"
-                      x:Name="grdTasks">
+                      x:Name="grdTasks"
+                      AutoGenerateColumns="False">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Flag" />
-                    <DataGridTextColumn Header="Goal" />
+                    <DataGridTextColumn Header="Goal" Binding="{Binding Goal}" Width="1*"/>
+                    <DataGridTextColumn Header="Flag" Binding="{Binding Flag}" Width="2*"/>
+                    <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="5*"/>
                 </DataGrid.Columns>
             </DataGrid>
+
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2">
+                <Button Content=" Remove " 
+                        Margin="5"
+                        Click="RemoveTask"/>
+                <Button Content="   Add   "
+                        Margin="5"
+                        Click="AddTask"/>
+            </StackPanel>
         </Grid>
     </Grid>
 </Window>
