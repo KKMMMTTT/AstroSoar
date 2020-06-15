@@ -106,6 +106,7 @@
                       x:Name="grdTasks"
                       AutoGenerateColumns="False">
                 <DataGrid.Columns>
+                    <DataGridTextColumn Header="Group" Binding="{Binding Group}" Width="1*"/>
                     <DataGridTextColumn Header="Goal" Binding="{Binding Goal}" Width="1*"/>
                     <DataGridTextColumn Header="Flag" Binding="{Binding Flag}" Width="2*"/>
                     <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="5*"/>
