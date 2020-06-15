@@ -31,5 +31,7 @@ namespace Game.Definitions.Questlines
             set => this._flag = value;
         }
         public long Goal { get; set; }
+
+        public char Group { get; set; }
     }
 }
