@@ -50,10 +50,12 @@ namespace Game.Scenes.MainMenu
             this.AddChild(this._musicButton);
         }
 
-        public void  EnterDevMode ( MouseButtonPressedEvent e)
+        public void EnterDevMode ( MouseButtonPressedEvent e)
         {
+            var scenes = ServiceProvider.SceneService;
             var log = ServiceProvider.Log;
             log.WriteLineClean("Entering Level Development Mode");
+            scenes.LoadNewScene<Scenes.DevMode.DevMode>();
         }
 
         public void StartGame(MouseButtonPressedEvent e)
