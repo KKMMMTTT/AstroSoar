@@ -1,9 +1,9 @@
-﻿using Game.Scenes.World;
+﻿using Annex.Scenes.Components;
 
 namespace Game.Entities.Behaviours
 {
     public interface IMoveable
     {
-        void Move(WorldScene worldScene);
+        void Move(Scene worldScene);
     }
 }

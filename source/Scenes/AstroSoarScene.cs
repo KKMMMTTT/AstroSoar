@@ -1,7 +1,9 @@
-﻿using Annex;
+﻿using System;
+using Annex;
 using Annex.Graphics.Events;
 using Annex.Scenes;
 using Annex.Scenes.Components;
+using Game.Scenes.Components.ExitMenuOverlay;
 
 namespace Game.Scenes
 {
@@ -13,18 +15,25 @@ namespace Game.Scenes
     {
         public override void HandleCloseButtonPressed()
         {
-            ServiceProvider.SceneService.LoadGameClosingScene();
+            if (GetElementById(ExitMenuOverlay.ID) == null)
+            {
+                var child = new ExitMenuOverlay(() => { ServiceProvider.SceneService.LoadGameClosingScene(); },
+                    () => { RemoveElementById(ExitMenuOverlay.ID); });
+                AddChild(child);
+            }
         }
 
         public override void HandleKeyboardKeyReleased(KeyboardKeyReleasedEvent e)
         {
+            base.HandleKeyboardKeyReleased(e);
+
+            if (e.Handled) return;
+         
             if (e.Key == KeyboardKey.Escape)
             {
                 e.Handled = true;
-                ServiceProvider.SceneService.LoadGameClosingScene();
+                Debug.ToggleDebugOverlay();
             }
-
-            base.HandleKeyboardKeyReleased(e);
         }
     }
 }

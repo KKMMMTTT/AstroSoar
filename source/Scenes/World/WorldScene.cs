@@ -2,26 +2,41 @@
 using Annex.Events;
 using Annex.Graphics;
 using Annex.Graphics.Contexts;
+using Annex.Scenes.Components;
 using Game.Entities;
+using Game.Entities.Behaviours;
+using Game.Events;
 using System.Collections.Generic;
 
 namespace Game.Scenes.World
 {
     public class WorldScene : AstroSoarScene
     {
-        private readonly Player Player;
-        private readonly IList<BaseEntity> _baseEntities;
+        private readonly Player _player;
+        private readonly IList<IMoveable> _baseEntities;
         private readonly TextureContext _mapTextureContext;
 
         public WorldScene()
         {
-            Player = new Player();
-            _baseEntities = new List<BaseEntity>() { Player };
+            _player = new Player();
+            _baseEntities = new List<IMoveable>() { _player };
             _mapTextureContext = new TextureContext("world.jpg");
+            
+            var button = new Button()
+            {
+                Caption = { Value = "Click me"},
+                Visible = true,
+                Font = { Value = "default.ttf"},
+                Position = { X = 10, Y = 10 },
+                FontSize = { Value = 30 },
+                
+            };
+            AddChild(button);
 
-            ServiceProvider.Canvas.GetCamera().Follow(Player.Position);
+            ServiceProvider.Canvas.GetCamera().Follow(_player.Position);
 
-            Events.AddEvent(PriorityType.LOGIC, UpdateEntityPositions());
+            var entityPositionsEvent = new UpdateWorldEntityPositionsEvent(this, _baseEntities, "update entity positions", 10, 0);
+            Events.AddEvent(PriorityType.LOGIC, entityPositionsEvent);
         }
 
         public void AddEntity(BaseEntity entity)
@@ -29,20 +44,10 @@ namespace Game.Scenes.World
             _baseEntities.Add(entity);
         }
 
-        private GameEvent UpdateEntityPositions()
-        {
-            return new GameEvent("update entity position in world", e =>
-            {
-                foreach (var baseEntity in _baseEntities)
-                {
-                    baseEntity.Move(this);
-                }
-            }, 5, 0);
-        }
-
         public override void Draw(ICanvas canvas)
         {
             canvas.Draw(_mapTextureContext);
+            base.Draw(canvas);
         }
     }
 }

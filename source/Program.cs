@@ -13,6 +13,7 @@ namespace Game
             AnnexGame.Initialize();
 
             Debug.PackageAssetsToBinaryFrom(AssetType.Texture, Path.Combine(SolutionFolder, "assets/textures/"));
+            Debug.PackageAssetsToBinaryFrom(AssetType.Font, Path.Combine(SolutionFolder, "assets/fonts/"));
 
             AnnexGame.Start<WorldScene>();
         }

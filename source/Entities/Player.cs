@@ -1,12 +1,12 @@
 ﻿using Annex;
 using Annex.Scenes;
-using Game.Scenes.World;
+using Annex.Scenes.Components;
 
 namespace Game.Entities
 {
     public class Player : BaseEntity
     {
-        public override void Move(WorldScene worldScene)
+        public override void Move(Scene worldScene)
         {
             var canvas = ServiceProvider.Canvas;
 

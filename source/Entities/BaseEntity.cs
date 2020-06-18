@@ -1,6 +1,6 @@
 ﻿using Annex.Data.Shared;
+using Annex.Scenes.Components;
 using Game.Entities.Behaviours;
-using Game.Scenes.World;
 
 namespace Game.Entities
 {
@@ -13,6 +13,6 @@ namespace Game.Entities
             Position = Vector.Create();
         }
         
-        public abstract void Move(WorldScene worldScene);
+        public abstract void Move(Scene worldScene);
     }
 }
