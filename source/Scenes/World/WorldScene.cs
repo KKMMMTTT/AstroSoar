@@ -1,7 +1,6 @@
 ﻿using Annex;
 using Annex.Events;
 using Annex.Graphics;
-using Annex.Graphics.Contexts;
 using Annex.Scenes.Components;
 using Game.Entities;
 using Game.Entities.Behaviours;
@@ -14,13 +13,11 @@ namespace Game.Scenes.World
     {
         private readonly Player _player;
         private readonly IList<IMoveable> _baseEntities;
-        private readonly TextureContext _mapTextureContext;
 
         public WorldScene()
         {
             _player = new Player();
             _baseEntities = new List<IMoveable>() { _player };
-            _mapTextureContext = new TextureContext("world.jpg");
             
             var button = new Button()
             {
@@ -28,8 +25,7 @@ namespace Game.Scenes.World
                 Visible = true,
                 Font = { Value = "default.ttf"},
                 Position = { X = 10, Y = 10 },
-                FontSize = { Value = 30 },
-                
+                FontSize = { Value = 30 }
             };
             AddChild(button);
 
@@ -46,7 +42,6 @@ namespace Game.Scenes.World
 
         public override void Draw(ICanvas canvas)
         {
-            canvas.Draw(_mapTextureContext);
             base.Draw(canvas);
         }
     }

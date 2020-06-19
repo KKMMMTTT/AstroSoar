@@ -20,8 +20,9 @@ namespace Game.Scenes.Components.ExitMenuOverlay
                 RenderSize = ServiceProvider.Canvas.GetResolution(),
                 UseUIView = true
             };
-            
-            var affirmationButton = new AffirmationButton("affirmationButton") {
+
+            var affirmationButton = new AffirmationButton("affirmationButton")
+            {
                 Visible = true,
                 Font = { Value = "default.ttf" },
                 ImageTextureName = { Value = "buttons/yes.png" },
@@ -29,7 +30,7 @@ namespace Game.Scenes.Components.ExitMenuOverlay
                 Size = { X = 40, Y = 40 },
                 OnClickHandler = affirmationAction
             };
-            
+
             var refutationButton = new RefutationButton("refutationButton")
             {
                 Visible = true,

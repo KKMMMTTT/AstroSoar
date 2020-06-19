@@ -12,7 +12,7 @@ namespace Game.Entities
         {
             Position = Vector.Create();
         }
-        
+
         public abstract void Move(Scene worldScene);
     }
 }
