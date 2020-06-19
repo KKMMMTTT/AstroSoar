@@ -1,10 +1,24 @@
-﻿
+﻿using Annex.Graphics;
+using Annex.Graphics.Contexts;
+using Annex.Scenes.Components;
+
 namespace Game.Entities
 {
-
-    public class Planet : BaseEntity
+    public class Planet : BaseEntity, IDrawableObject
     {
-        public Planet()
+        private readonly TextureContext _textureContext;
+
+        public Planet(string filePath)
+        {
+            _textureContext = new TextureContext(filePath);
+        }
+
+        public void Draw(ICanvas canvas)
+        {
+            canvas.Draw(_textureContext);
+        }
+
+        public override void Move(Scene worldScene)
         {
         }
     }
