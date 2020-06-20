@@ -1,5 +1,10 @@
 ﻿using Annex;
+using Annex.Assets;
 using Game.Scenes;
+using Game.Scenes.MainMenu;
+using System.IO;
+using static Annex.Paths;
+
 
 namespace Game
 {
@@ -7,9 +12,9 @@ namespace Game
     {
         private static void Main(string[] args) {
             AnnexGame.Initialize();
-            // Load assets
-            Debug.PackageAssetsToBinaryFrom(Annex.Assets.AssetType.Texture, Paths.SolutionFolder + "/Assets/Textures");
-
+            Debug.PackageAssetsToBinaryFrom(AssetType.Texture, Path.Combine(Paths.SolutionFolder, "/assets/textures/"));
+            Debug.PackageAssetsToBinaryFrom(AssetType.Audio, Path.Combine(SolutionFolder, "assets/music/"));
+            Debug.PackageAssetsToBinaryFrom(AssetType.Font, Path.Combine(SolutionFolder, "assets/font/"));
             AnnexGame.Start<MainMenu>();
         }
     }
