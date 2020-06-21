@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Default" xml:space="preserve">
+    <value>default.ttf</value>
+  </data>
+  <data name="DevMode" xml:space="preserve">
+    <value>uni0553.ttf</value>
+  </data>
   <data name="Titlebar" xml:space="preserve">
     <value>default.ttf</value>
   </data>

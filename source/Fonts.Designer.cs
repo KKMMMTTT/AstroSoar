@@ -59,14 +59,5 @@ namespace Game {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to default.ttf.
-        /// </summary>
-        public static string Titlebar {
-            get {
-                return ResourceManager.GetString("Titlebar", resourceCulture);
-            }
-        }
     }
 }

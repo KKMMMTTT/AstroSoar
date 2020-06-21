@@ -12,6 +12,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Scenes\DevMode\Elements\Class1.cs" />
+    <Compile Remove="Scenes\DevMode\Elements\ModifyButton.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Annex\source\Annex\Annex.csproj" />
   </ItemGroup>
 
@@ -21,12 +26,21 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
+    <Compile Update="Fonts.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Fonts.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Update="Definitions\Strings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Fonts.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Fonts.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

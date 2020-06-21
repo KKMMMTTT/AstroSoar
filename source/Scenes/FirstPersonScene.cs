@@ -28,7 +28,7 @@ namespace Game.Scenes
 
         public Titlebar(String caption) : base(Titlebar.TitlebarCaptionId) {
             this.Caption.Set(caption.Value);
-            this.Font.Set(Fonts.Titlebar);
+            this.Font.Set("Default.ttf");
         }
 
         public class FadeAndRemoveEvent : CustomEvent
