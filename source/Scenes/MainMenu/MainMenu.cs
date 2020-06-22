@@ -1,20 +1,13 @@
 ﻿using Annex;
 using Annex.Audio;
-using Annex.Data;
-using Annex.Data.Shared;
-using Annex.Events;
 using Annex.Graphics;
-using Annex.Graphics.Contexts;
 using Annex.Graphics.Events;
-using Annex.Scenes;
 using Annex.Scenes.Components;
-using SFML.Audio;
 
 namespace Game.Scenes.MainMenu
 {
     public class MainMenu : Scene
     {
-
         private readonly Menu _menu;
         private readonly Button _startButton;
         private readonly Button _musicButton;

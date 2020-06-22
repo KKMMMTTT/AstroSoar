@@ -1,35 +1,30 @@
 ﻿using Annex;
-using Annex.Data;
-using Annex.Data.Shared;
+using Annex.Events;
 using Annex.Graphics;
-using Annex.Graphics.Contexts;
 using Annex.Graphics.Events;
 using Annex.Scenes;
-using Annex.Events;
 using Annex.Scenes.Components;
-using Game.Scenes.DevMode.Elemenets;
 using Game.Scenes.DevMode.Elements;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Game.Scenes.DevMode
 {
     public class DevMode : Scene
     {
+        public sealed class ElementID
+        {
+            public const string ADD_BUTTON = "AddButton";
+            public const string MOVE_BUTTON = "MoveButton";
+            public const string REMOVE_BUTTON = "RemoveButton";
+            public const string MODIFY_POSITION_BUTTON = "ModifyPositionButton";
+            public const string BACK_BUTTON = "BackButton";
+            public const string EXPORT_ALL_BUTTON = "ExportAllButton";
+            public const string SET_TEXTURE_BUTTON = "SetTextureButton";
+        }
+
         private readonly ButtonsBackground buttonBack;
         private readonly Placeholder placeholder;
-
-        private readonly AddButton add;
-        private readonly RemoveButton remove;
-        private readonly MoveButton move;
-        private readonly ModifyPositionButton mod;
-        private readonly ModifySizeButton modSize;
-        private readonly BackButton back;
-
-        private readonly SetTextureButton cmdSetTexture;
-        private readonly ExportAllButton cmdExportAll;
 
         private readonly List<Item> items;
 
@@ -43,7 +38,6 @@ namespace Game.Scenes.DevMode
             DisplayItems,
             ModifyPositionItemSelection,
             MoveItemsSelection,
-            MoveItems,
             ModifyItemPosition,
             DeleteItems,
             SetTextureSelection,
@@ -57,38 +51,16 @@ namespace Game.Scenes.DevMode
             this.buttonBack = new ButtonsBackground();
             this.placeholder = new Placeholder();
 
-            this.back = new BackButton() {
-                OnClickHandler = Back,
-                Visible = false
-            };
-            this.add = new AddButton() {
-                OnClickHandler = AddItem
-            };
-            this.remove = new RemoveButton() {
-                OnClickHandler = RemoveItem
-            };
-            this.move = new MoveButton() {
-                OnClickHandler = MoveItem
-            };
-            this.mod = new ModifyPositionButton() {
-                OnClickHandler = ModifyItemPosition
-            };
-
-            this.cmdExportAll = new ExportAllButton(this.OnExportAll);
-            this.cmdSetTexture = new SetTextureButton(this.OnSetTexture);
+            this.AddChild(new NavbarButton(ElementID.ADD_BUTTON, "Add", this.AddItem));
+            this.AddChild(new NavbarButton(ElementID.REMOVE_BUTTON, "Remove", this.RemoveItem));
+            this.AddChild(new NavbarButton(ElementID.MOVE_BUTTON, "Move", this.MoveItem));
+            this.AddChild(new NavbarButton(ElementID.MODIFY_POSITION_BUTTON, "Modify", this.ModifyItemPosition));
+            this.AddChild(new NavbarButton(ElementID.EXPORT_ALL_BUTTON, "Export All", this.OnExportAll));
+            this.AddChild(new NavbarButton(ElementID.SET_TEXTURE_BUTTON, "Set Texture", this.OnSetTexture));
+            this.AddChild(new NavbarButton(ElementID.BACK_BUTTON, "Back", this.Back));
 
 
-            this.add.Position.Set(0, 0);
-            this.remove.Position.Set(100, 0);
-            this.move.Position.Set(200, 0);
-            this.mod.Position.Set(300, 0);
-            this.back.Position.Set(400, 0);
-
-            this.AddChild(this.add);
-            this.AddChild(this.remove);
-            this.AddChild(this.move);
-            this.AddChild(this.mod);
-            this.AddChild(this.back);
+            this.GetElementById(ElementID.BACK_BUTTON).Visible = false;
 
             this.Events.AddEvent(PriorityType.INPUT, (e) => {
                 if (!this.selectingItem) {
@@ -123,12 +95,33 @@ namespace Game.Scenes.DevMode
 
             base.HandleMouseButtonPressed(e);
 
-            if (this.selectingItem)
-            {
-                this.InvokeFlagOperation();
-                this.Operation = Flags.None;
-                this.selectingItem = false;
+            if (e.Handled) {
+                return;
             }
+
+            if (this.selectingItem) {
+                var operation = this.Operation;
+                this.InvokeFlagOperation(ref operation);
+                this.Operation = operation;
+                this.selectingItem = false;
+
+                if (this.Operation == Flags.None) {
+                    FinishOperation();
+                }
+                return;
+            }
+
+            if (this.Operation == Flags.MoveItemsSelection) {
+                this._selectedItem?.SetPosition(e.MouseX, e.MouseY);
+            }
+        }
+
+        private void FinishOperation() {
+            this.Operation = Flags.None;
+            foreach (var item in this.items) {
+                item.isSelected(false);
+            }
+            this.GetElementById(ElementID.BACK_BUTTON).Visible = false;
         }
 
         private void OnExportAll(MouseButtonPressedEvent e) {
@@ -140,8 +133,7 @@ namespace Game.Scenes.DevMode
         }
 
         private void Back(MouseButtonPressedEvent e) {
-            this.Operation = Flags.None;
-            this.back.Visible = false;
+            FinishOperation();
         }
 
         private void AddItem(MouseButtonPressedEvent e) {
@@ -160,7 +152,6 @@ namespace Game.Scenes.DevMode
 
         private void MoveItem(MouseButtonPressedEvent e) {
             Console.WriteLine("Select item you wish to move using UP and DOWN keys");
-
             SetFlag(Flags.MoveItemsSelection);
         }
 
@@ -175,7 +166,7 @@ namespace Game.Scenes.DevMode
         }
 
         public override void HandleKeyboardKeyPressed(KeyboardKeyPressedEvent e) {
-            if (this.Operation == Flags.MoveItems) {
+            if (this.Operation == Flags.MoveItemsSelection) {
                 float dx = 0, dy = 0;
                 float speed = e.ShiftDown ? 5 : 1;
                 switch (e.Key) {
@@ -192,15 +183,19 @@ namespace Game.Scenes.DevMode
                         dx = speed;
                         break;
                     case KeyboardKey.Enter:
-                        this.Operation = Flags.None;
+                        FinishOperation();
                         return;
                 }
                 this._selectedItem?.GetPosition().Add(dx, dy);
             }
         }
 
-        public void InvokeFlagOperation() {
-            switch (this.Operation) {
+        public void InvokeFlagOperation(ref Flags flag) {
+
+            // By default
+            var postOperationFlag = Flags.None;
+
+            switch (flag) {
                 case Flags.DeleteItems: {
                     if (items.Count == 0) {
                         return;
@@ -208,22 +203,24 @@ namespace Game.Scenes.DevMode
                     items.Remove(this._selectedItem);
                     break;
                 }
-                case Flags.ModifyItemPosition:
-                    {
-                        string input = Console.ReadLine();
-                        string[] coordinates = input.Split(',');
-                        int x = Int16.Parse(coordinates[0]);
-                        int y = Int16.Parse(coordinates[1]);
-                        this._selectedItem?.SetPosition(x,y);
+                case Flags.ModifyItemPosition: {
+                    string input = Console.ReadLine();
+                    string[] coordinates = input.Split(',');
+                    int x = Int16.Parse(coordinates[0]);
+                    int y = Int16.Parse(coordinates[1]);
+                    this._selectedItem?.SetPosition(x, y);
 
-                        break;
+                    break;
                 }
-                case Flags.MoveItems:
+                case Flags.MoveItemsSelection:
                     Console.WriteLine("Use ARROW keys to move item");
                     Console.WriteLine("Hold down SHIFT to move faster");
-                    back.Visible = true;
+                    this.GetElementById(ElementID.BACK_BUTTON).Visible = true;
+                    postOperationFlag = Flags.MoveItemsSelection;
                     break;
             }
+
+            flag = postOperationFlag;
         }
 
         public override void HandleCloseButtonPressed() {

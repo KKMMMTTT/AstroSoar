@@ -4,18 +4,19 @@ using Annex.Graphics.Events;
 using Annex.Scenes.Components;
 using System;
 
-namespace Game.Scenes.DevMode.Elemenets
+namespace Game.Scenes.DevMode.Elements
 {
-    public class ActionButton : Button
+    public class NavbarButton : Button
     {
+        private static float _leftOffset = 0;
         protected readonly Action<MouseButtonPressedEvent> Action;
 
-        public ActionButton(string id, string caption, Action<MouseButtonPressedEvent> action) : base(id) {
+        public NavbarButton(string id, string caption, Action<MouseButtonPressedEvent> action) : base(id) {
             this.Action = action;
 
             this.Size.Set(100, 25);
             this.Caption.Set(caption);
-            this.Font.Set("Default.ttf");
+            this.Font.Set("uni0553.ttf");
             this.RenderText.FontSize = 16;
             this.RenderText.FontColor = RGBA.White;
             this.RenderText.Alignment = new TextAlignment()
@@ -24,10 +25,13 @@ namespace Game.Scenes.DevMode.Elemenets
                 VerticalAlignment = VerticalAlignment.Middle,
                 Size = this.Size
             };
+            this.Position.Set(_leftOffset, 0);
+            _leftOffset += this.Size.X;
         }
 
         public override void HandleMouseButtonPressed(MouseButtonPressedEvent e) {
             this.Action(e);
+            e.Handled = true;
         }
     }
 }
