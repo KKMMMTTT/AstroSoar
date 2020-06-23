@@ -18,6 +18,7 @@ namespace Game.Scenes.DevMode
             public const string MOVE_BUTTON = "MoveButton";
             public const string REMOVE_BUTTON = "RemoveButton";
             public const string MODIFY_POSITION_BUTTON = "ModifyPositionButton";
+            public const string MODIFY_SIZE_BUTTON = "ModifySizeButton";
             public const string BACK_BUTTON = "BackButton";
             public const string EXPORT_ALL_BUTTON = "ExportAllButton";
             public const string SET_TEXTURE_BUTTON = "SetTextureButton";
@@ -54,7 +55,8 @@ namespace Game.Scenes.DevMode
             this.AddChild(new NavbarButton(ElementID.ADD_BUTTON, "Add", this.AddItem));
             this.AddChild(new NavbarButton(ElementID.REMOVE_BUTTON, "Remove", this.RemoveItem));
             this.AddChild(new NavbarButton(ElementID.MOVE_BUTTON, "Move", this.MoveItem));
-            this.AddChild(new NavbarButton(ElementID.MODIFY_POSITION_BUTTON, "Modify", this.ModifyItemPosition));
+            this.AddChild(new NavbarButton(ElementID.MODIFY_POSITION_BUTTON, "Set Position", this.ModifyItemPosition));
+            this.AddChild(new NavbarButton(ElementID.MODIFY_SIZE_BUTTON, "Resize", this.ModifyItemSize));
             this.AddChild(new NavbarButton(ElementID.EXPORT_ALL_BUTTON, "Export All", this.OnExportAll));
             this.AddChild(new NavbarButton(ElementID.SET_TEXTURE_BUTTON, "Set Texture", this.OnSetTexture));
             this.AddChild(new NavbarButton(ElementID.BACK_BUTTON, "Back", this.Back));
@@ -160,6 +162,11 @@ namespace Game.Scenes.DevMode
             SetFlag(Flags.ModifyItemPosition);
         }
 
+        private void ModifyItemSize(MouseButtonPressedEvent e){
+            Console.WriteLine("Select the item you would like to resize and enter the new dimensions (ie 100,200)");
+            SetFlag(Flags.ModifyItemSize);
+        }
+
         public void SetFlag(Flags operation) {
             this.Operation = operation;
             this.selectingItem = true;
@@ -210,6 +217,14 @@ namespace Game.Scenes.DevMode
                     int y = Int16.Parse(coordinates[1]);
                     this._selectedItem?.SetPosition(x, y);
 
+                    break;
+                }
+                case Flags.ModifyItemSize:{
+                    string input = Console.ReadLine();
+                    string[] dimensions = input.Split(',');
+                    int x = Int16.Parse(dimensions[0]);
+                    int y = Int16.Parse(dimensions[1]);
+                    this._selectedItem?.SetSize(x, y);
                     break;
                 }
                 case Flags.MoveItemsSelection:
