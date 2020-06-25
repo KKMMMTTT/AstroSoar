@@ -2,13 +2,35 @@
 using Annex.Data.Shared;
 using Annex.Graphics;
 using Annex.Graphics.Contexts;
+using System;
 
 namespace Game.Scenes.DevMode.Elements
 {
+    [Serializable]
     public class Item : IDrawableObject
     {
         private readonly SolidRectangleContext _rectangleContext;
-        private string name = "item";
+        public string Name = "item";
+
+        public float X {
+            get => this._rectangleContext.RenderPosition.X;
+            set => this._rectangleContext.RenderPosition.X = value;
+        }
+
+        public float Y {
+            get => this._rectangleContext.RenderPosition.Y;
+            set => this._rectangleContext.RenderPosition.Y = value;
+        }
+
+        public float RenderX {
+            get => this._rectangleContext.RenderSize.X;
+            set => this._rectangleContext.RenderSize.X = value;
+        }
+
+        public float RenderY {
+            get => this._rectangleContext.RenderSize.Y;
+            set => this._rectangleContext.RenderSize.Y = value;
+        }
 
         public Item()
         {
@@ -19,16 +41,6 @@ namespace Game.Scenes.DevMode.Elements
                 RenderBorderSize = 1.5f,
                 RenderSize = Vector.Create(200, 100)
             };
-        }
-
-        public void SetName(string s)
-        {
-            name = s;
-        }
-
-        public string GetName()
-        {
-            return name;
         }
 
         public void SetPosition(float x, float y)

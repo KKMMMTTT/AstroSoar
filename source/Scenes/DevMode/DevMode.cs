@@ -4,6 +4,8 @@ using Annex.Graphics;
 using Annex.Graphics.Events;
 using Annex.Scenes;
 using Annex.Scenes.Components;
+using Game.Definitions;
+using Game.Definitions.Questlines;
 using Game.Scenes.DevMode.Elements;
 using System;
 using System.Collections.Generic;
@@ -127,7 +129,11 @@ namespace Game.Scenes.DevMode
         }
 
         private void OnExportAll(MouseButtonPressedEvent e) {
+            var service = AstroSoarServiceProvider.DefinitionService;
 
+            foreach (var item in this.items) {
+                service.Save(item.Name, item, DefinitionType.UI);
+            }
         }
 
         private void OnSetTexture(MouseButtonPressedEvent e) {
@@ -142,7 +148,7 @@ namespace Game.Scenes.DevMode
             Console.WriteLine("Enter name of item: ");
             string input = Console.ReadLine();
             Item item = new Item();
-            item.SetName(input);
+            item.Name = input;
             items.Add(item);
         }
 
