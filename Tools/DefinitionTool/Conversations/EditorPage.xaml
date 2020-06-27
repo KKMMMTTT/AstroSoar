@@ -1,9 +1,8 @@
-﻿<Window x:Class="QuestlineDefinitionTool.EditorPage"
+﻿<Window x:Class="DefinitionTool.Conversations.EditorPage"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:QuestlineDefinitionTool"
         mc:Ignorable="d"
         Title="EditorPage" Height="450" Width="800"
         WindowStartupLocation="CenterScreen">
@@ -15,11 +14,11 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="0"/>
             <RowDefinition Height="10"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
+
         <Label Content="Name:"
                HorizontalAlignment="Center"
                Grid.Row="0"
@@ -30,17 +29,7 @@
                  TextChanged="txtName_TextChanged"
                  Margin="1"/>
 
-        <Label Content="Description:"
-               HorizontalAlignment="Center"
-               Grid.Row="1"
-               Grid.Column="0"/>
-        <TextBox x:Name="txtDescription"
-                 Grid.Row="1"
-                 Grid.Column="2"
-                 TextChanged="txtDescription_TextChanged"
-                 Margin="1"/>
-        
-        
+
         <Grid Grid.Row="3"
               Grid.Column="0">
             <Grid.RowDefinitions>
@@ -48,8 +37,8 @@
                 <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
 
-            <ListBox x:Name="lstSteps"
-                     SelectionChanged="LstSteps_SelectionChanged"
+            <ListBox x:Name="lstReplyOptions"
+                     SelectionChanged="lstReplyOptions_SelectionChanged"
                      Grid.Row="0"
                      Margin="5">
             </ListBox>
@@ -59,8 +48,6 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*" />
                     <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
                 <Button Content="+"
                         Grid.Column="0" 
@@ -68,20 +55,15 @@
                 <Button Content="-"
                         Grid.Column="1"
                         Click="cmdRemove_Click" />
-                <Button Content="^"
-                        Grid.Column="2"
-                        Click="cmdShiftUp_Click" />
-                <Button Content="v"
-                        Grid.Column="3"
-                        Click="cmdShiftDown_Click" />
             </Grid>
         </Grid>
 
-        <Grid x:Name="grdStepEditor"
+        <Grid x:Name="grdEditor"
               IsEnabled="False"
               Grid.Column="2"
               Grid.Row="3">
             <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="auto" />
@@ -96,34 +78,44 @@
                    Content="Step Description" />
             <TextBox Grid.Row="0"
                      Grid.Column="1" 
-                     x:Name="txtStepDescription"
-                     TextChanged="txtStepDescription_TextChanged"
+                     x:Name="txtDisplayText"
+                     TextChanged="txtDisplayText_TextChanged"
                      Margin="1"/>
 
-            <DataGrid Grid.Row="1"
+            <Label Grid.Row="1"
+                   Grid.Column="0"
+                   Content="DisplayBox Texture" />
+            <TextBox Grid.Row="1"
+                     Grid.Column="1" 
+                     x:Name="txtDisplayBoxTexture"
+                     TextChanged="txtDisplayBoxTexture_TextChanged"
+                     Margin="1"/>
+
+            <DataGrid Grid.Row="2"
                       Grid.ColumnSpan="2"
                       Grid.Column="0"
-                      x:Name="grdTasks"
+                      x:Name="grdReplyOptions"
                       AutoGenerateColumns="False">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Group" Binding="{Binding Group}" Width="1*"/>
-                    <DataGridTextColumn Header="Goal" Binding="{Binding Goal}" Width="1*"/>
-                    <DataGridTextColumn Header="Flag" Binding="{Binding Flag}" Width="2*"/>
-                    <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="5*"/>
+                    <DataGridTextColumn Header="ReplyText" Binding="{Binding ReplyText}" Width="5*"/>
+                    <DataGridTextColumn Header="Flag" Binding="{Binding Flag}" Width="3*"/>
+                    <DataGridTextColumn Header="GoTo" Binding="{Binding GoTo}" Width="1*"/>
+                    <DataGridTextColumn Header="Increment" Binding="{Binding Increment}" Width="1*"/>
+                    <DataGridTextColumn Header="Guid" Binding="{Binding Guid}" Width="1*"/>
                 </DataGrid.Columns>
             </DataGrid>
 
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Right"
-                        Grid.Row="2"
+                        Grid.Row="3"
                         Grid.Column="0"
                         Grid.ColumnSpan="2">
                 <Button Content=" Remove " 
                         Margin="5"
-                        Click="RemoveTask"/>
+                        Click="RemovePage"/>
                 <Button Content="   Add   "
                         Margin="5"
-                        Click="AddTask"/>
+                        Click="AddPage"/>
             </StackPanel>
         </Grid>
     </Grid>

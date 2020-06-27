@@ -1,0 +1,25 @@
+﻿<Window x:Class="DefinitionTool.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Width="600"
+        Height="600"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <ListView>
+            <ListViewItem HorizontalContentAlignment="Center" MouseDoubleClick="Questlines_MouseDoubleClick" Padding="10">Edit Questlines</ListViewItem>
+            <ListViewItem HorizontalContentAlignment="Center" MouseDoubleClick="Conversations_MouseDoubleClick" Padding="10">Edit Conversations</ListViewItem>
+        </ListView>
+
+        <Label Grid.Row="1" 
+               x:Name="lblFolderLocation" 
+               IsEnabled="False"/>
+    </Grid>
+</Window>

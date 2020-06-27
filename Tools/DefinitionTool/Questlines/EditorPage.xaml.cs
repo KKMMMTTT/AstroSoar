@@ -1,11 +1,9 @@
 ﻿using Game.Definitions.Questlines;
-using Game.Questlines;
 using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 
-namespace QuestlineDefinitionTool
+namespace DefinitionTool.Questlines
 {
     /// <summary>
     /// Interaction logic for EditorPage.xaml
@@ -54,6 +52,12 @@ namespace QuestlineDefinitionTool
 
             for (int i = 0; i < this.Steps.Length; i++) {
                 this.lstSteps.Items.Add(new StepListboxItem(this.Steps[i], i));
+            }
+
+            if (this.CurrentlySelectedStep != null) {
+                this.grdStepEditor.IsEnabled = true;
+            } else {
+                this.grdStepEditor.IsEnabled = false;
             }
         }
 

@@ -3,6 +3,7 @@
     public enum DefinitionType
     {
         Questline,
-        UI
+        UI,
+        Conversation
     }
 }

@@ -9,7 +9,7 @@ namespace Game.Definitions.Questlines
         public string? Description { get; set; }
         public string FullDescription => this.Description ?? NoDescription;
 
-        public string Name { get; set; } = string.Empty;
+        public string Name { get; set; } = "New Questline";
 
         // Array of steps to be completed in linear order
         public StepDefinition[] Steps { get; set; } = Array.Empty<StepDefinition>();

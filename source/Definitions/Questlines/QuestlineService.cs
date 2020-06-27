@@ -8,9 +8,6 @@ namespace Game.Definitions.Questlines
 {
     public class QuestlineService : IService
     {
-        public QuestlineService() {
-        }
-
         public void Destroy() {
         }
 

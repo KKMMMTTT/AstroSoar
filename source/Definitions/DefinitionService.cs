@@ -57,6 +57,8 @@ namespace Game.Definitions
                     return "questline";
                 case DefinitionType.UI:
                     return "ui";
+                case DefinitionType.Conversation:
+                    return "conversation";
                 default:
                     Debug.Error($"Unhandled definition type {type}");
                     return string.Empty;
