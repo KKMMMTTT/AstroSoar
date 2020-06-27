@@ -3,6 +3,6 @@
     public interface IDescribable
     {
         string? Description { get; set; }
-        string FullDescription { get; }
+        //string FullDescription { get; }
     }
 }

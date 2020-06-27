@@ -1,11 +1,13 @@
-﻿using static Game.Definitions.Strings;
+﻿using System;
+using static Game.Definitions.Strings;
 
 namespace Game.Definitions.Questlines
 {
+    [Serializable]
     public class TaskDefinition : IDescribable
     {
         public string? Description { get; set; }
-        public string FullDescription => this.Description ?? NoDescription;
+        //public string FullDescription => this.Description ?? NoDescription;
 
         /// Active questline task goals can be implemented using a flag and an increment.
         ///
@@ -25,11 +27,7 @@ namespace Game.Definitions.Questlines
         /// Every time you signal, check if the flag is the same as the one for the task.
         /// If it is, then the increment would get added to the active questline's sum.
         /// When the sum == Goal, you know the task is complete.
-        private string? _flag;
-        public string Flag {
-            get => this._flag ?? string.Empty;
-            set => this._flag = value;
-        }
+        public string Flag { get; set; }
         public long Goal { get; set; }
 
         public char Group { get; set; }

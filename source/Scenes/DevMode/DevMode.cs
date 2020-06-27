@@ -23,7 +23,7 @@ namespace Game.Scenes.DevMode
             public const string MODIFY_SIZE_BUTTON = "ModifySizeButton";
             public const string BACK_BUTTON = "BackButton";
             public const string EXPORT_ALL_BUTTON = "ExportAllButton";
-            public const string SET_TEXTURE_BUTTON = "SetTextureButton";
+            public const string IMPORT_BUTTON = "ImportButton";
         }
 
         private readonly ButtonsBackground buttonBack;
@@ -43,7 +43,6 @@ namespace Game.Scenes.DevMode
             MoveItemsSelection,
             ModifyItemPosition,
             DeleteItems,
-            SetTextureSelection,
             ModifyItemSize
         };
 
@@ -60,7 +59,7 @@ namespace Game.Scenes.DevMode
             this.AddChild(new NavbarButton(ElementID.MODIFY_POSITION_BUTTON, "Set Position", this.ModifyItemPosition));
             this.AddChild(new NavbarButton(ElementID.MODIFY_SIZE_BUTTON, "Resize", this.ModifyItemSize));
             this.AddChild(new NavbarButton(ElementID.EXPORT_ALL_BUTTON, "Export All", this.OnExportAll));
-            this.AddChild(new NavbarButton(ElementID.SET_TEXTURE_BUTTON, "Set Texture", this.OnSetTexture));
+            this.AddChild(new NavbarButton(ElementID.IMPORT_BUTTON, "Import", this.OnImport));
             this.AddChild(new NavbarButton(ElementID.BACK_BUTTON, "Back", this.Back));
 
 
@@ -103,11 +102,13 @@ namespace Game.Scenes.DevMode
                 return;
             }
 
-            if (this.selectingItem) {
+            if (this.selectingItem && this._selectedItem != null) {
+                Console.WriteLine("Selected " + _selectedItem.Name);
                 var operation = this.Operation;
                 this.InvokeFlagOperation(ref operation);
                 this.Operation = operation;
                 this.selectingItem = false;
+
 
                 if (this.Operation == Flags.None) {
                     FinishOperation();
@@ -122,7 +123,7 @@ namespace Game.Scenes.DevMode
 
         private void FinishOperation() {
             this.Operation = Flags.None;
-            foreach (var item in this.items) {
+            foreach (var item in this.items){
                 item.isSelected(false);
             }
             this.GetElementById(ElementID.BACK_BUTTON).Visible = false;
@@ -132,12 +133,11 @@ namespace Game.Scenes.DevMode
             var service = AstroSoarServiceProvider.DefinitionService;
 
             foreach (var item in this.items) {
-                service.Save(item.Name, item, DefinitionType.UI);
+                service.Save($"scene-name/{item.Name}", item, DefinitionType.UI);
             }
         }
 
-        private void OnSetTexture(MouseButtonPressedEvent e) {
-            SetFlag(Flags.SetTextureSelection);
+        private void OnImport(MouseButtonPressedEvent e){
         }
 
         private void Back(MouseButtonPressedEvent e) {
@@ -145,10 +145,13 @@ namespace Game.Scenes.DevMode
         }
 
         private void AddItem(MouseButtonPressedEvent e) {
-            Console.WriteLine("Enter name of item: ");
+            Console.WriteLine("Enter name of item and the image you are adding: foo,foo.png ");
             string input = Console.ReadLine();
-            Item item = new Item();
-            item.Name = input;
+            string[] image = input.Split(',');
+            string name = image[0].Trim();
+            string texture = image[1].Trim();
+            Item item = new Item(texture);
+            item.Name = name;
             items.Add(item);
         }
 
@@ -179,6 +182,12 @@ namespace Game.Scenes.DevMode
         }
 
         public override void HandleKeyboardKeyPressed(KeyboardKeyPressedEvent e) {
+            base.HandleKeyboardKeyPressed(e);
+
+            if (e.Handled){
+                return;
+            }
+
             if (this.Operation == Flags.MoveItemsSelection) {
                 float dx = 0, dy = 0;
                 float speed = e.ShiftDown ? 5 : 1;
@@ -201,6 +210,10 @@ namespace Game.Scenes.DevMode
                 }
                 this._selectedItem?.GetPosition().Add(dx, dy);
             }
+
+            if(e.Key == KeyboardKey.Tilde) {
+                Debug.ToggleDebugOverlay();
+            }
         }
 
         public void InvokeFlagOperation(ref Flags flag) {
@@ -219,8 +232,8 @@ namespace Game.Scenes.DevMode
                 case Flags.ModifyItemPosition: {
                     string input = Console.ReadLine();
                     string[] coordinates = input.Split(',');
-                    int x = Int16.Parse(coordinates[0]);
-                    int y = Int16.Parse(coordinates[1]);
+                    int x = Int16.Parse(coordinates[0].Trim());
+                    int y = Int16.Parse(coordinates[1].Trim());
                     this._selectedItem?.SetPosition(x, y);
 
                     break;
@@ -228,8 +241,8 @@ namespace Game.Scenes.DevMode
                 case Flags.ModifyItemSize:{
                     string input = Console.ReadLine();
                     string[] dimensions = input.Split(',');
-                    int x = Int16.Parse(dimensions[0]);
-                    int y = Int16.Parse(dimensions[1]);
+                    int x = Int16.Parse(dimensions[0].Trim());
+                    int y = Int16.Parse(dimensions[1].Trim());
                     this._selectedItem?.SetSize(x, y);
                     break;
                 }

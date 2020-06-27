@@ -12,6 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Definitions\Questlines\QuestlineProgressor.cs" />
     <Compile Remove="Scenes\DevMode\Elements\Class1.cs" />
     <Compile Remove="Scenes\DevMode\Elements\ModifyButton.cs" />
   </ItemGroup>

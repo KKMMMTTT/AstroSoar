@@ -9,73 +9,72 @@ namespace Game.Scenes.DevMode.Elements
     [Serializable]
     public class Item : IDrawableObject
     {
-        private readonly SolidRectangleContext _rectangleContext;
+        private readonly TextureContext _texture;
         public string Name = "item";
 
         public float X {
-            get => this._rectangleContext.RenderPosition.X;
-            set => this._rectangleContext.RenderPosition.X = value;
+            set => this._texture.RenderPosition.X = value;
+            get => this._texture.RenderPosition.X;
         }
 
         public float Y {
-            get => this._rectangleContext.RenderPosition.Y;
-            set => this._rectangleContext.RenderPosition.Y = value;
+            set => this._texture.RenderPosition.Y = value;
+            get => this._texture.RenderPosition.Y;
         }
 
         public float RenderX {
-            get => this._rectangleContext.RenderSize.X;
-            set => this._rectangleContext.RenderSize.X = value;
+            get => this._texture.RenderSize.X;
+            set => this._texture.RenderSize.X = value;
         }
 
         public float RenderY {
-            get => this._rectangleContext.RenderSize.Y;
-            set => this._rectangleContext.RenderSize.Y = value;
+            get => this._texture.RenderSize.Y;
+            set => this._texture.RenderSize.Y = value;
         }
 
-        public Item()
+        public Item(string texture)
         {
-            this._rectangleContext = new SolidRectangleContext(RGBA.Red)
+            this._texture = new TextureContext(texture)
             {
-                RenderPosition = Vector.Create(150, 540),
-                RenderBorderColor = RGBA.White,
-                RenderBorderSize = 1.5f,
-                RenderSize = Vector.Create(200, 100)
+                RenderPosition = Vector.Create(150, 150),
+                RenderSize = Vector.Create(200, 200),
+                RenderColor = RGBA.White
             };
         }
 
         public void SetPosition(float x, float y)
         {
-            _rectangleContext.RenderPosition = Vector.Create(x, y);
+            _texture.RenderPosition = Vector.Create(x, y);
         }
 
         public Vector GetPosition()
         {
-            return _rectangleContext.RenderPosition;
+            return _texture.RenderPosition;
         }
 
         public void SetSize(float x, float y)
         {
-            _rectangleContext.RenderSize = Vector.Create(x, y);
+            _texture.RenderSize = Vector.Create(x, y);
         }
 
         public Vector GetSize()
         {
-            return _rectangleContext.RenderSize;
+            return _texture.RenderSize;
         }
 
         public void isSelected(bool s)
         {
-            if(s == true){
-                _rectangleContext.RenderBorderColor = RGBA.Blue;
+            if (s == true){
+                _texture.RenderColor.Set(255,255,255,150);
             }
-            if(s == false){
-                _rectangleContext.RenderBorderColor = RGBA.White;
+            if (s == false){
+                _texture.RenderColor.Set(255,255,255,255);
             }
         }
 
-        public void Draw(ICanvas canvas)
-        {
-            canvas.Draw(this._rectangleContext);
+        public void Draw(ICanvas canvas){
+            canvas.Draw(this._texture);
         }
+   
     }
 }

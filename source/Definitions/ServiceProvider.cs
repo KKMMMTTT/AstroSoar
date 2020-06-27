@@ -1,6 +1,8 @@
 ﻿using Annex;
+using Game.Definitions;
+using Game.Definitions.Questlines;
 
-namespace Game.Definitions.Questlines
+namespace Game
 {
     public static partial class AstroSoarServiceProvider
     {

@@ -1,4 +1,5 @@
-﻿using Game.Questlines;
+﻿using Game.Definitions.Questlines;
+using Game.Questlines;
 using System;
 using System.Collections.Generic;
 using System.IO;

@@ -1,4 +1,9 @@
-﻿using Game.Questlines;
+﻿using Annex;
+using Annex.Logging;
+using Game;
+using Game.Definitions;
+using Game.Definitions.Questlines;
+using Game.Questlines;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System.IO;
 using System.Windows;
@@ -11,7 +16,14 @@ namespace QuestlineDefinitionTool
         public MainWindow() {
             InitializeComponent();
 
+            ServiceProvider.Provide<Log>(new Log());
+
             this.lstQuestlineDefinitions.MouseDoubleClick += this.LstQuestlineDefinitions_MouseDoubleClick;
+
+            foreach (var questline in AstroSoarServiceProvider.QuestlineService.LoadAll()) {
+                Globals.QuestlineDefinitions.Add(questline);
+            }
+            RefreshQuestlineDefinitionList();
         }
 
         private void LstQuestlineDefinitions_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e) {
@@ -27,6 +39,14 @@ namespace QuestlineDefinitionTool
 
             if (newSelectedIndex != null) {
                 this.lstQuestlineDefinitions.SelectedIndex = (int)newSelectedIndex;
+            }
+        }
+
+        private void SaveAll(object sender, RoutedEventArgs e) {
+            var definitionService = AstroSoarServiceProvider.DefinitionService;
+
+            foreach (var definition in Globals.QuestlineDefinitions) {
+                definitionService.Save(definition.Name, definition, DefinitionType.Questline);
             }
         }
 
@@ -64,13 +84,9 @@ namespace QuestlineDefinitionTool
             RefreshQuestlineDefinitionList(Globals.QuestlineDefinitions.Count - 1);
         }
 
-        private void SaveAll(object sender, RoutedEventArgs e) {
-
-        }
-
         public class QuestlineDefinitionListboxItem : Label
         {
-            private QuestlineDefinition Definition;
+            public QuestlineDefinition Definition;
 
             public QuestlineDefinitionListboxItem(QuestlineDefinition definition) {
                 this.Definition = definition;

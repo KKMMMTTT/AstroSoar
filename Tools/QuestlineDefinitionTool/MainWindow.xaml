@@ -19,11 +19,9 @@
                 <MenuItem Header="New"
                           IsCheckable="False" 
                           Click="NewDefinition"/>
-            </MenuItem>
-            <MenuItem Header="Options">
-                <MenuItem Header="Set Definitions Path"
-                          IsCheckable="False" 
-                          Click="mnuSetDefinitionsPath_Click"/>
+                <MenuItem Header="Save All"
+                          IsCheckable="False"
+                          Click="SaveAll"/>
             </MenuItem>
         </Menu>
 

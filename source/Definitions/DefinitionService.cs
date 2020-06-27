@@ -15,15 +15,15 @@ namespace Game.Definitions
         public DefinitionService() {
 #if DEBUG
             Directory.CreateDirectory(_sourcePath);
-            Directory.CreateDirectory(_destPath);
-
             if (Directory.Exists(_destPath)) {
                 Directory.Delete(_destPath, true);
             }
+            Directory.CreateDirectory(_destPath);
 
             foreach (var file in Directory.GetFiles(_sourcePath, "*.json", SearchOption.AllDirectories)) {
                 var fi = new FileInfo(file);
-                Directory.CreateDirectory(fi.Directory.FullName);
+                string folder = Path.Combine(_destPath, fi.Directory.Name);
+                Directory.CreateDirectory(folder);
                 File.Copy(file, Path.Combine(_destPath, fi.Directory.Name, fi.Name));
             }
 #endif
