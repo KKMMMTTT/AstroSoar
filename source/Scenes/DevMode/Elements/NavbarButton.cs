@@ -16,7 +16,7 @@ namespace Game.Scenes.DevMode.Elements
 
             this.Size.Set(100, 25);
             this.Caption.Set(caption);
-            this.Font.Set("uni0553.ttf");
+            this.Font.Set(Fonts.DevMode);
             this.RenderText.FontSize = 16;
             this.RenderText.FontColor = RGBA.White;
             this.RenderText.Alignment = new TextAlignment()

@@ -59,5 +59,32 @@ namespace Game {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to default.ttf.
+        /// </summary>
+        public static string Default {
+            get {
+                return ResourceManager.GetString("Default", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to uni0553.ttf.
+        /// </summary>
+        public static string DevMode {
+            get {
+                return ResourceManager.GetString("DevMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to default.ttf.
+        /// </summary>
+        public static string Titlebar {
+            get {
+                return ResourceManager.GetString("Titlebar", resourceCulture);
+            }
+        }
     }
 }
