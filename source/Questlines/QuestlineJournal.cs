@@ -1,5 +1,3 @@
-using Game.Definitions;
-using Game.Definitions.Questlines;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,6 +6,7 @@ namespace Game.Questlines
     public class QuestlineJournal
     {
         private readonly Dictionary<string, QuestlineProgression> _progress;
+        public IEnumerable<KeyValuePair<string, QuestlineProgression>> AllQuestlines => this._progress;
 
         public QuestlineJournal() {
             this._progress = new Dictionary<string, QuestlineProgression>();

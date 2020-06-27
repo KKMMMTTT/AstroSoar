@@ -15,11 +15,14 @@ namespace Game.Questlines
     {
         public QuestlineProgressState State { get; private set; }
         private Queue<StepProgression> _remainingSteps;
+        public readonly string Description;
+
         public StepProgression? CurrentStep => _remainingSteps.Count != 0 ? _remainingSteps.Peek() : null;
         
         public QuestlineProgression(QuestlineDefinition questline) {
             this.State = QuestlineProgressState.Unstarted;
             this._remainingSteps = new Queue<StepProgression>();
+            this.Description = questline.Description!;
 
             foreach (var step in questline.Steps) {
                 this._remainingSteps.Enqueue(new StepProgression(step));
@@ -47,14 +50,16 @@ namespace Game.Questlines
     {
         private Dictionary<char, IEnumerable<TaskProgression>> _tasks;
         public IEnumerable<KeyValuePair<char, IEnumerable<TaskProgression>>> Tasks => this._tasks;
+        public readonly string Description;
 
         public StepProgression(StepDefinition step) {
+            this.Description = step.Description!;
             this._tasks = new Dictionary<char, IEnumerable<TaskProgression>>();
             foreach (var task in step.Task) {
                 if (!this._tasks.ContainsKey(task.Group)) {
                     this._tasks[task.Group] = new List<TaskProgression>();
                 }
-                (this._tasks[task.Group] as IList<TaskProgression>).Add(new TaskProgression(task));
+                (this._tasks[task.Group] as IList<TaskProgression>)!.Add(new TaskProgression(task));
             }
         }
 
@@ -78,10 +83,6 @@ namespace Game.Questlines
                 this._tasks[group] = newLst;
             }
 
-            //foreach (var group in groups) {
-            //    this._tasks[group] = this._tasks[group].Where(task => !task.SignalProgress(flag, increment));
-            //}
-
             return this._tasks.Any(entry => entry.Value.Count() == 0);
         }
     }
@@ -91,8 +92,10 @@ namespace Game.Questlines
         public readonly string Flag;
         public readonly long Goal;
         public long Count;
+        public readonly string Description;
 
         public TaskProgression(TaskDefinition task) {
+            this.Description = task.Description;
             this.Flag = task.Flag;
             this.Goal = task.Goal;
             this.Count = 0;

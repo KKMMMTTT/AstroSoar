@@ -19,9 +19,6 @@
                 <MenuItem Header="New"
                           IsCheckable="False" 
                           Click="NewDefinition"/>
-                <MenuItem Header="Save All"
-                          IsCheckable="False"
-                          Click="SaveAll"/>
             </MenuItem>
         </Menu>
 

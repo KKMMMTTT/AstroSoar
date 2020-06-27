@@ -1,6 +1,4 @@
-﻿using Game.Definitions;
-using Game.Definitions.Questlines;
-using System;
+﻿using System;
 using static Game.Definitions.Strings;
 
 namespace Game.Definitions.Questlines
@@ -9,11 +7,11 @@ namespace Game.Definitions.Questlines
     public class QuestlineDefinition : IDescribable
     {
         public string? Description { get; set; }
-        //public string FullDescription => this.Description ?? NoDescription;
+        public string FullDescription => this.Description ?? NoDescription;
 
-        public string Name { get; set;  }
+        public string Name { get; set; } = string.Empty;
 
         // Array of steps to be completed in linear order
-        public StepDefinition[] Steps {  get; set;  }  = Array.Empty<StepDefinition>();
+        public StepDefinition[] Steps { get; set; } = Array.Empty<StepDefinition>();
     }
 }

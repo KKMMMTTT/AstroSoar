@@ -3,7 +3,6 @@ using Annex.Logging;
 using Game;
 using Game.Definitions;
 using Game.Definitions.Questlines;
-using Game.Questlines;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System.IO;
 using System.Windows;
@@ -16,14 +15,19 @@ namespace QuestlineDefinitionTool
         public MainWindow() {
             InitializeComponent();
 
-            ServiceProvider.Provide<Log>(new Log());
+            ServiceProvider.Provide(new Log());
 
+            this.Closing += this.MainWindow_Closing;
             this.lstQuestlineDefinitions.MouseDoubleClick += this.LstQuestlineDefinitions_MouseDoubleClick;
 
             foreach (var questline in AstroSoarServiceProvider.QuestlineService.LoadAll()) {
                 Globals.QuestlineDefinitions.Add(questline);
             }
             RefreshQuestlineDefinitionList();
+        }
+
+        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
+            SaveAll();
         }
 
         private void LstQuestlineDefinitions_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e) {
@@ -42,8 +46,10 @@ namespace QuestlineDefinitionTool
             }
         }
 
-        private void SaveAll(object sender, RoutedEventArgs e) {
+        private void SaveAll() {
             var definitionService = AstroSoarServiceProvider.DefinitionService;
+
+            Directory.Delete(Globals.DefinitionPath, true);
 
             foreach (var definition in Globals.QuestlineDefinitions) {
                 definitionService.Save(definition.Name, definition, DefinitionType.Questline);

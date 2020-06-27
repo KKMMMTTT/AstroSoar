@@ -1,1 +1,0 @@
-{"Description":null,"Name":"test","Steps":[{"Description":null,"Task":[{"Description":null,"Flag":"Kill_Player","Goal":5,"Group":"A"}]},{"Description":null,"Task":[{"Description":null,"Flag":"Kill_Turret","Goal":3,"Group":"A"},{"Description":null,"Flag":"Earn_Gold","Goal":10000,"Group":"A"}]}]}

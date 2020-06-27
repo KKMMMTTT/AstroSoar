@@ -182,6 +182,11 @@ namespace Game.Scenes.DevMode
         }
 
         public override void HandleKeyboardKeyPressed(KeyboardKeyPressedEvent e) {
+            if (e.Key == KeyboardKey.Tilde) {
+                Debug.ToggleDebugOverlay();
+                return;
+            }
+
             base.HandleKeyboardKeyPressed(e);
 
             if (e.Handled){
@@ -209,10 +214,6 @@ namespace Game.Scenes.DevMode
                         return;
                 }
                 this._selectedItem?.GetPosition().Add(dx, dy);
-            }
-
-            if(e.Key == KeyboardKey.Tilde) {
-                Debug.ToggleDebugOverlay();
             }
         }
 
