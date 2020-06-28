@@ -3,6 +3,7 @@ using Annex.Audio;
 using Annex.Graphics;
 using Annex.Graphics.Events;
 using Annex.Scenes.Components;
+using Game.Scenes.World;
 
 namespace Game.Scenes.MainMenu
 {
@@ -55,6 +56,7 @@ namespace Game.Scenes.MainMenu
         {
             var log = ServiceProvider.Log;
             log.WriteLineClean("Entering game");
+            ServiceProvider.SceneService.LoadNewScene<WorldScene>();
         }
 
         public void ToggleMusic( MouseButtonPressedEvent e)

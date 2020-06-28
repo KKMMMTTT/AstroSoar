@@ -14,6 +14,7 @@ namespace Game
         public static QuestlineJournal Journal = new QuestlineJournal();
 
         private static void Main(string[] args) {
+            
             AnnexGame.Initialize();
             Debug.PackageAssetsToBinaryFrom(AssetType.Texture, Path.Combine(SolutionFolder, "assets/textures/"));
             Debug.PackageAssetsToBinaryFrom(AssetType.Audio, Path.Combine(SolutionFolder, "assets/music/"));
