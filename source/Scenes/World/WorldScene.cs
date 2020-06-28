@@ -9,15 +9,13 @@ using System.Collections.Generic;
 
 namespace Game.Scenes.World
 {
-    public class WorldScene : SceneWithPlayer
+    public class WorldScene : AstroSoarScene, ISceneWithPlayer
     {
-        // Map ids => objects
-
         private readonly IList<IMoveable> _moveableEntities;
         private readonly IList<IDrawableObject> _drawableEntities;
+        public Player? Player { get; set; }
 
-        public WorldScene()
-        {
+        public WorldScene() {
             _moveableEntities = new List<IMoveable>();
             _drawableEntities = new List<IDrawableObject>() { new Planet("planets/planet_1.png") };
 
@@ -36,20 +34,16 @@ namespace Game.Scenes.World
 
         // Remove from map, => remove from both lists
 
-        public void AddMoveableEntity(IMoveable entity)
-        {
+        public void AddMoveableEntity(IMoveable entity) {
             _moveableEntities.Add(entity);
         }
 
-        public void AddDrawableEntity(IDrawableObject entity)
-        {
+        public void AddDrawableEntity(IDrawableObject entity) {
             _drawableEntities.Add(entity);
         }
 
-        public override void Draw(ICanvas canvas)
-        {
-            foreach (var entity in _drawableEntities)
-            {
+        public override void Draw(ICanvas canvas) {
+            foreach (var entity in _drawableEntities) {
                 entity.Draw(canvas);
             }
             base.Draw(canvas);

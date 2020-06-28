@@ -37,7 +37,7 @@ namespace Game.Services
             }
 
             // TODO: Hook this up to the player's questline journal SIGNAL
-            if (ServiceProvider.SceneService.CurrentScene is SceneWithPlayer scene) {
+            if (ServiceProvider.SceneService.CurrentScene is ISceneWithPlayer scene) {
                 scene.Player!.QuestlineJournal.SignalProgress(flag, increment);
             }
         }

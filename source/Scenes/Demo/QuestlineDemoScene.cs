@@ -1,14 +1,17 @@
 ﻿using Annex;
 using Annex.Graphics.Events;
+using Annex.Scenes.Components;
 using Game.Entities;
 using Game.Questlines;
 using System.Text;
 
 namespace Game.Scenes.Demo
 {
-    public class QuestlineDemoScene : SceneWithPlayer
+    public class QuestlineDemoScene : Scene, ISceneWithPlayer
     {
-        private static QuestlineJournal Journal => (ServiceProvider.SceneService.CurrentScene as SceneWithPlayer)!.Player!.QuestlineJournal;
+        private static QuestlineJournal Journal => (ServiceProvider.SceneService.CurrentScene as ISceneWithPlayer)!.Player!.QuestlineJournal;
+
+        public Player? Player { get; set; }
 
         static QuestlineDemoScene() {
             Debug.AddDebugOverlayCommand("signal", args => {
@@ -55,8 +58,8 @@ namespace Game.Scenes.Demo
             });
         }
 
-        public QuestlineDemoScene() : base(new Player()) {
-
+        public QuestlineDemoScene() {
+            this.Player = new Player();
         }
 
         public override void HandleKeyboardKeyPressed(KeyboardKeyPressedEvent e) {
