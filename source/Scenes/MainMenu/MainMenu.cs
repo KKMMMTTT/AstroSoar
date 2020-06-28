@@ -56,7 +56,7 @@ namespace Game.Scenes.MainMenu
         {
             var log = ServiceProvider.Log;
             log.WriteLineClean("Entering game");
-            ServiceProvider.SceneService.LoadNewScene<WorldScene>();
+            ServiceProvider.SceneService.LoadNewScene<NewGame>();
         }
 
         public void ToggleMusic( MouseButtonPressedEvent e)

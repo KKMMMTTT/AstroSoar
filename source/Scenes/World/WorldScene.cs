@@ -1,6 +1,7 @@
 ﻿using Annex;
 using Annex.Events;
 using Annex.Graphics;
+using Annex.Scenes;
 using Game.Entities;
 using Game.Entities.Behaviours;
 using Game.Events;
@@ -8,10 +9,8 @@ using System.Collections.Generic;
 
 namespace Game.Scenes.World
 {
-    public class WorldScene : AstroSoarScene
+    public class WorldScene : SceneWithPlayer
     {
-        private readonly Player _player;
-
         // Map ids => objects
 
         private readonly IList<IMoveable> _moveableEntities;
@@ -19,13 +18,18 @@ namespace Game.Scenes.World
 
         public WorldScene()
         {
-            _player = new Player();
-            _moveableEntities = new List<IMoveable>() { _player };
+            _moveableEntities = new List<IMoveable>();
             _drawableEntities = new List<IDrawableObject>() { new Planet("planets/planet_1.png") };
 
-            ServiceProvider.Canvas.GetCamera().Follow(_player.Position);
             var entityPositionsEvent = new UpdateWorldEntityPositionsEvent(this, _moveableEntities, "update entity positions", 10, 0);
             Events.AddEvent(PriorityType.LOGIC, entityPositionsEvent);
+        }
+
+        public override void HandleSceneOnEnter(SceneOnEnterEvent e) {
+            base.HandleSceneOnEnter(e);
+
+            this.AddMoveableEntity(this.Player!);
+            ServiceProvider.Canvas.GetCamera().Follow(this.Player!.Position);
         }
 
         // Add to map, => add to proper lists
@@ -44,11 +48,11 @@ namespace Game.Scenes.World
 
         public override void Draw(ICanvas canvas)
         {
-            base.Draw(canvas);
             foreach (var entity in _drawableEntities)
             {
                 entity.Draw(canvas);
             }
+            base.Draw(canvas);
         }
     }
 }
