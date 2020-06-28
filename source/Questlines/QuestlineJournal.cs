@@ -20,7 +20,7 @@ namespace Game.Questlines
             return this._progress[questlineName];
         }
 
-        public void SignalProgress(string flag, int increment) {
+        public void SignalProgress(string flag, long increment) {
             foreach (var entry in this._progress.Values.Where(questline => questline.State == QuestlineProgressState.InProgress)) {
                 if (entry.SignalProgress(flag, increment)) {
                     if (entry.CurrentStep == null) {

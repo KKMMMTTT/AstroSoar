@@ -3,7 +3,6 @@ using Annex.Audio;
 using Annex.Graphics;
 using Annex.Graphics.Events;
 using Annex.Scenes.Components;
-using Game.Scenes.World;
 
 namespace Game.Scenes.MainMenu
 {
@@ -84,6 +83,14 @@ namespace Game.Scenes.MainMenu
 
         public override void HandleCloseButtonPressed() {
             ServiceProvider.SceneService.LoadGameClosingScene();
+        }
+
+        public override void HandleKeyboardKeyPressed(KeyboardKeyPressedEvent e) {
+            if (e.Key == Annex.Scenes.KeyboardKey.Tilde) {
+                Debug.ToggleDebugOverlay();
+                return;
+            }
+            base.HandleKeyboardKeyPressed(e);
         }
 
         public override void Draw(ICanvas canvas)

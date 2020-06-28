@@ -29,7 +29,7 @@ namespace Game.Questlines
             }
         }
 
-        public bool SignalProgress(string flag, int increment) {
+        public bool SignalProgress(string flag, long increment) {
             if (CurrentStep!.SignalProgress(flag, increment)) {
                 this._remainingSteps.Dequeue();
                 return true;
@@ -63,7 +63,7 @@ namespace Game.Questlines
             }
         }
 
-        public bool SignalProgress(string flag, int increment) {
+        public bool SignalProgress(string flag, long increment) {
             var groups = string.Join("", this._tasks.Select(entry => entry.Key.ToString()));
 
             foreach (var group in groups) {
@@ -101,7 +101,7 @@ namespace Game.Questlines
             this.Count = 0;
         }
 
-        public bool SignalProgress(string flag, int increment) {
+        public bool SignalProgress(string flag, long increment) {
             if (flag == this.Flag) {
                 this.Count += increment;
 

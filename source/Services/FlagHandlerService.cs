@@ -1,5 +1,6 @@
 ﻿using Annex;
 using Annex.Assets;
+using Game.Scenes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace Game.Services
             this._flagHandlers[flag].Remove(handler);
         }
 
-        public void Signal(string flag, long increment) {
+        public void SignalProgress(string flag, long increment) {
             if (this._flagHandlers.ContainsKey(flag)) {
                 foreach (var entry in this._flagHandlers[flag]) {
                     entry.Invoke(increment);
@@ -36,6 +37,9 @@ namespace Game.Services
             }
 
             // TODO: Hook this up to the player's questline journal SIGNAL
+            if (ServiceProvider.SceneService.CurrentScene is SceneWithPlayer scene) {
+                scene.Player!.QuestlineJournal.SignalProgress(flag, increment);
+            }
         }
 
         public void Destroy() {

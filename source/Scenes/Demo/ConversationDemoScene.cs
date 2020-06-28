@@ -3,12 +3,12 @@ using Annex.Graphics.Events;
 using Annex.Scenes.Components;
 using Game.Scenes.Components.Conversations;
 
-namespace Game.Scenes.Demo.Conversations
+namespace Game.Scenes.Demo
 {
-    public class ConversationScene : Scene
+    public class ConversationDemoScene : Scene
     {
-        static ConversationScene() {
-            Debug.AddDebugOverlayCommand("start_chat", args => {
+        static ConversationDemoScene() {
+            Debug.AddDebugOverlayCommand("open", args => {
                 ActiveConversationDialog.Show(ServiceProvider.SceneService.CurrentScene, args[0]);
             });
         }

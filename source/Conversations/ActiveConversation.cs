@@ -25,7 +25,7 @@ namespace Game.Conversations
             string? flag = selectedOption.Flag;
             long? increment = selectedOption.Increment;
             if (flag != null && increment != null) {
-                AstroSoarServiceProvider.FlagHandlerService.Signal(flag, (long)increment);
+                AstroSoarServiceProvider.FlagHandlerService.SignalProgress(flag, (long)increment);
             }
 
             Debug.ErrorIf(selectedOption.GoTo < -1 || selectedOption.GoTo >= this._definition.ConversationPages.Count, $"GoTo {selectedOption.GoTo} is not within the bounds [0,{this._definition.ConversationPages.Count}]");
