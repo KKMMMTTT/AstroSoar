@@ -1,6 +1,7 @@
 ﻿using Annex;
 using Annex.Assets;
 using Game.Questlines;
+using Game.Scenes.Demo.Conversations;
 using Game.Scenes.MainMenu;
 using System.IO;
 using System.Text;
@@ -27,6 +28,10 @@ namespace Game
             Debug.AddDebugOverlayCommand("start", args => {
                 string name = args[0];
                 Journal.GetQuestline(name).StartQuestline();
+            });
+
+            Debug.AddDebugOverlayCommand("convo", args => {
+                ServiceProvider.SceneService.LoadNewScene<ConversationScene>();
             });
 
             Debug.AddDebugOverlayInformation(() => {

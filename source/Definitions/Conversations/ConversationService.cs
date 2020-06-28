@@ -23,5 +23,10 @@ namespace Game.Definitions.Conversations
                 yield return definitionService.Load<ConversationDefinition>(DefinitionType.Conversation, new FileInfo(file).Name[0..^5]);
             }
         }
+
+        public ConversationDefinition Load(string id) {
+            var definitionService = AstroSoarServiceProvider.DefinitionService;
+            return definitionService.Load<ConversationDefinition>(DefinitionType.Conversation, id);
+        }
     }
 }

@@ -75,7 +75,7 @@
 
             <Label Grid.Row="0"
                    Grid.Column="0"
-                   Content="Step Description" />
+                   Content="Message: " />
             <TextBox Grid.Row="0"
                      Grid.Column="1" 
                      x:Name="txtDisplayText"
