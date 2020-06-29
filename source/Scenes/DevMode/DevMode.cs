@@ -5,7 +5,6 @@ using Annex.Graphics.Events;
 using Annex.Scenes;
 using Annex.Scenes.Components;
 using Game.Definitions;
-using Game.Definitions.Questlines;
 using Game.Scenes.DevMode.Elements;
 using System;
 using System.Collections.Generic;
@@ -133,7 +132,7 @@ namespace Game.Scenes.DevMode
             var service = AstroSoarServiceProvider.DefinitionService;
 
             foreach (var item in this.items) {
-                service.Save($"scene-name/{item.Name}", item, DefinitionType.UI);
+                service.SaveToAssets($"scene-name/{item.Name}", item, DefinitionType.UI);
             }
         }
 

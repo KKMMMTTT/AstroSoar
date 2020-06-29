@@ -16,7 +16,7 @@ namespace Game.Definitions.Questlines
             string path = Path.Combine(Paths.SolutionFolder, "assets/definitions/questline/");
             Directory.CreateDirectory(path);
             foreach (var file in Directory.GetFiles(path, "*.json")) {
-                yield return definitionService.Load<QuestlineDefinition>(DefinitionType.Questline, new FileInfo(file).Name[0..^5]);
+                yield return definitionService.LoadFromBin<QuestlineDefinition>(DefinitionType.Questline, new FileInfo(file).Name[0..^5]);
             }
         }
 

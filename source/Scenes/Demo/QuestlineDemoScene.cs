@@ -39,11 +39,11 @@ namespace Game.Scenes.Demo
                     if (quest.State == QuestlineProgressState.InProgress) {
                         sb.AppendLine($"Step: {quest.CurrentStep!.Description}");
                         sb.AppendLine();
-                        foreach (var taskEntry in quest.CurrentStep!.Tasks) {
-                            char group = taskEntry.Key;
-                            var tasks = taskEntry.Value;
+                        foreach (var taskEntry in quest.CurrentStep!.TaskGroups) {
+                            string group = taskEntry.Key;
+                            var taskgroup = taskEntry.Value;
 
-                            foreach (var task in tasks) {
+                            foreach (var task in taskgroup.Tasks) {
                                 sb.AppendLine($"Description:{task.Description}");
                                 sb.AppendLine($"Group:{group}\tTask:{task.Flag}\tGoal:{task.Goal}\tCount:{task.Count}");
                                 sb.AppendLine();

@@ -14,9 +14,15 @@ namespace Game.Scenes
     {
         public override void HandleCloseButtonPressed() {
             if (GetElementById(ExitMenuOverlay.ID) == null) {
-                var child = new ExitMenuOverlay(() => { ServiceProvider.SceneService.LoadGameClosingScene(); },
+                var child = new ExitMenuOverlay(() => { ServiceProvider.SceneService.LoadGameClosingScene(); SavePlayer(); },
                     () => { RemoveElementById(ExitMenuOverlay.ID); });
                 AddChild(child);
+            }
+        }
+
+        private void SavePlayer() {
+            if (this is ISceneWithPlayer currentScene) {
+                AstroSoarServiceProvider.PlayerDefinitionService.Save(currentScene.Player!, "player");
             }
         }
 

@@ -29,18 +29,26 @@ namespace Game.Definitions
 #endif
         }
 
-        public T Load<T>(DefinitionType type, string id) {
+        public T LoadFromBin<T>(DefinitionType type, string id) {
             string path = GetAssetPath(_destPath, type, id);
             Debug.Assert(File.Exists(path), $"{type} definition {path} does not exist");
             return JsonSerializer.Deserialize<T>(File.ReadAllText(path));
         }
 
-        public void Save<T>(string id, T obj, DefinitionType type) {
+        public void SaveToAssets<T>(string id, T obj, DefinitionType type) {
             string path = GetAssetPath(_sourcePath, type, id);
-            string json = JsonSerializer.Serialize<T>(obj);
+            string json = JsonSerializer.Serialize(obj);
             var fi = new FileInfo(path);
             Directory.CreateDirectory(fi.Directory.FullName);
             File.WriteAllText(path, json);
+        }
+
+        public void SaveToBin<T>(string id, T obj, DefinitionType type) {
+            string path = GetAssetPath(_destPath, type, id);
+            string json = JsonSerializer.Serialize(obj);
+            var fi = new FileInfo(path);
+            Directory.CreateDirectory(fi.Directory.FullName);
+            File.WriteAllText(Path.Combine(fi.Directory.FullName, fi.Name), json);
         }
 
         public void Destroy() {
@@ -59,6 +67,8 @@ namespace Game.Definitions
                     return "ui";
                 case DefinitionType.Conversation:
                     return "conversation";
+                case DefinitionType.PlayerSave:
+                    return "saves";
                 default:
                     Debug.Error($"Unhandled definition type {type}");
                     return string.Empty;

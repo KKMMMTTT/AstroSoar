@@ -2,12 +2,14 @@
 using Annex.Scenes;
 using Annex.Scenes.Components;
 using Game.Questlines;
+using System;
 
 namespace Game.Entities
 {
+    [Serializable]
     public class Player : BaseEntity
     {
-        public readonly QuestlineJournal QuestlineJournal;
+        public QuestlineJournal QuestlineJournal { get; set; }
 
         public Player() {
             this.QuestlineJournal = new QuestlineJournal();

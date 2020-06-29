@@ -20,13 +20,13 @@ namespace Game.Definitions.Conversations
             string path = Path.Combine(Paths.SolutionFolder, "assets/definitions/conversation/");
             Directory.CreateDirectory(path);
             foreach (var file in Directory.GetFiles(path, "*.json")) {
-                yield return definitionService.Load<ConversationDefinition>(DefinitionType.Conversation, new FileInfo(file).Name[0..^5]);
+                yield return definitionService.LoadFromBin<ConversationDefinition>(DefinitionType.Conversation, new FileInfo(file).Name[0..^5]);
             }
         }
 
         public ConversationDefinition Load(string id) {
             var definitionService = AstroSoarServiceProvider.DefinitionService;
-            return definitionService.Load<ConversationDefinition>(DefinitionType.Conversation, id);
+            return definitionService.LoadFromBin<ConversationDefinition>(DefinitionType.Conversation, id);
         }
     }
 }

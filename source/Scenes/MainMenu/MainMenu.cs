@@ -10,6 +10,7 @@ namespace Game.Scenes.MainMenu
     {
         private readonly Menu _menu;
         private readonly Button _startButton;
+        private readonly Button _loadButton;
         private readonly Button _musicButton;
         private readonly Button _devButton;
         private bool musicPlaying; //a flag to tell if music is on or off
@@ -34,11 +35,17 @@ namespace Game.Scenes.MainMenu
                 OnClickHandler = this.StartGame
             };
 
+            this._loadButton = new MenuButton("LOAD") {
+                OnClickHandler = this.LoadGame 
+            };
+
             this._startButton.Position.Set(450, 200);
-            this._devButton.Position.Set(450, 250);
-            this._musicButton.Position.Set(450, 300);
+            this._loadButton.Position.Set(450, 250);
+            this._devButton.Position.Set(450, 300);
+            this._musicButton.Position.Set(450, 350);
 
             this.AddChild(this._startButton);
+            this.AddChild(this._loadButton);
             this.AddChild(this._devButton);
             this.AddChild(this._musicButton);
         }
@@ -48,7 +55,7 @@ namespace Game.Scenes.MainMenu
             var scenes = ServiceProvider.SceneService;
             var log = ServiceProvider.Log;
             log.WriteLineClean("Entering Level Development Mode");
-            scenes.LoadNewScene<Scenes.DevMode.DevMode>();
+            scenes.LoadNewScene<DevMode.DevMode>();
         }
 
         public void StartGame(MouseButtonPressedEvent e)
@@ -56,6 +63,10 @@ namespace Game.Scenes.MainMenu
             var log = ServiceProvider.Log;
             log.WriteLineClean("Entering game");
             ServiceProvider.SceneService.LoadNewScene<NewGame>();
+        }
+
+        public void LoadGame(MouseButtonPressedEvent e) {
+            ServiceProvider.SceneService.LoadNewScene<LoadGame>();
         }
 
         public void ToggleMusic( MouseButtonPressedEvent e)

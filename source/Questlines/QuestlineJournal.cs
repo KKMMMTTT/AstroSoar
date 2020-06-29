@@ -1,12 +1,22 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace Game.Questlines
 {
+    [Serializable]
     public class QuestlineJournal
     {
-        private readonly Dictionary<string, QuestlineProgression> _progress;
+        private Dictionary<string, QuestlineProgression> _progress;
+
+        [JsonIgnore]
         public IEnumerable<KeyValuePair<string, QuestlineProgression>> AllQuestlines => this._progress;
+        
+        public Dictionary<string, QuestlineProgression> SERIALIZATION_ENTRY_QUESTLINE_PROGRESS {
+            get => this._progress;
+            set => this._progress = value;
+        }
 
         public QuestlineJournal() {
             this._progress = new Dictionary<string, QuestlineProgression>();

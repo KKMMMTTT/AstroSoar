@@ -4,6 +4,7 @@
     {
         Questline,
         UI,
-        Conversation
+        Conversation,
+        PlayerSave
     }
 }
