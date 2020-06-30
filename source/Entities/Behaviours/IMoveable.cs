@@ -1,9 +1,12 @@
-﻿using Annex.Scenes.Components;
+﻿using Annex.Data.Shared;
+using Game.Scenes.World;
 
 namespace Game.Entities.Behaviours
 {
     public interface IMoveable
     {
-        void Move(Scene worldScene);
+        (bool, Vector) CanMove(WorldScene worldScene);
+        
+        void Move(Vector direction);
     }
 }
