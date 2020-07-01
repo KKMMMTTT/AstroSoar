@@ -10,7 +10,13 @@ namespace Game.Scenes.DevMode.Elements
     public class Item : IDrawableObject
     {
         private readonly TextureContext _texture;
-        public string Name = "item";
+
+        public string TextureName {
+            get => this._texture.SourceTextureName;
+            set => this._texture.SourceTextureName.Set(value);
+        }
+
+        public string Name {  get;  set;  }  = "item";
 
         public float X {
             set => this._texture.RenderPosition.X = value;
@@ -30,6 +36,15 @@ namespace Game.Scenes.DevMode.Elements
         public float RenderY {
             get => this._texture.RenderSize.Y;
             set => this._texture.RenderSize.Y = value;
+        }
+
+        public Item() {
+            this._texture = new TextureContext(string.Empty)
+            {
+                RenderPosition = Vector.Create(),
+                RenderSize = Vector.Create(),
+                RenderColor = RGBA.White
+            };
         }
 
         public Item(string texture)

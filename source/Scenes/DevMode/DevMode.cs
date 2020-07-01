@@ -8,6 +8,7 @@ using Game.Definitions;
 using Game.Scenes.DevMode.Elements;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Game.Scenes.DevMode
 {
@@ -130,13 +131,39 @@ namespace Game.Scenes.DevMode
 
         private void OnExportAll(MouseButtonPressedEvent e) {
             var service = AstroSoarServiceProvider.DefinitionService;
+            Console.WriteLine("Enter name of save");
+            string input = Console.ReadLine();
 
             foreach (var item in this.items) {
-                service.SaveToAssets($"scene-name/{item.Name}", item, DefinitionType.UI);
+                service.SaveToAssets($"{input}/{item.Name}", item, DefinitionType.UI);
+                service.SaveToBin($"{input}/{item.Name}", item, DefinitionType.UI);
             }
+
+            Console.WriteLine("Saved " + input);
         }
 
         private void OnImport(MouseButtonPressedEvent e){
+            var service = AstroSoarServiceProvider.DefinitionService;
+
+            Console.WriteLine("Enter name of save to load");
+            string input = Console.ReadLine();
+
+            string path = Path.Combine(Paths.SolutionFolder, "assets/definitions/ui/"+ input);
+
+            if (!Directory.Exists(path)) {
+                Console.WriteLine($"{path} doesn't exist.");
+                return;
+            }
+
+            items.Clear();
+
+            foreach (var file in Directory.GetFiles(path)) {
+                var fi = new FileInfo(file);
+                var item = service.LoadFromBin<Item>(DefinitionType.UI, $"{input}/{fi.Name[0..^5]}");
+                items.Add(item);
+            }
+
+
         }
 
         private void Back(MouseButtonPressedEvent e) {
