@@ -1,13 +1,12 @@
 ﻿using Annex;
 using Annex.Graphics.Events;
-using Annex.Scenes.Components;
 using Game.Entities;
 using Game.Questlines;
 using System.Text;
 
 namespace Game.Scenes.Demo
 {
-    public class QuestlineDemoScene : Scene, ISceneWithPlayer
+    public class QuestlineDemoScene : AstroSoarScene, ISceneWithPlayer
     {
         private static QuestlineJournal Journal => (ServiceProvider.SceneService.CurrentScene as ISceneWithPlayer)!.Player!.QuestlineJournal;
 
@@ -59,7 +58,7 @@ namespace Game.Scenes.Demo
         }
 
         public QuestlineDemoScene() {
-            this.Player = new Player();
+            this.Player = AstroSoarServiceProvider.PlayerDefinitionService.LoadSave("player");
         }
 
         public override void HandleKeyboardKeyPressed(KeyboardKeyPressedEvent e) {
