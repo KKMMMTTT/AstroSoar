@@ -1,6 +1,6 @@
 ﻿using Annex.Events;
-using Annex.Scenes.Components;
-using Game.Entities.Behaviours;
+using Game.Entities;
+using Game.Scenes.World;
 using System.Collections.Generic;
 using EventArgs = Annex.Events.EventArgs;
 
@@ -8,20 +8,25 @@ namespace Game.Events
 {
     public class UpdateWorldEntityPositionsEvent : CustomEvent
     {
-        private readonly Scene _scene;
-        private readonly IList<IMoveable> _moveables;
+        private readonly WorldScene _scene;
+        private readonly IList<BaseEntity> _entities;
 
-        public UpdateWorldEntityPositionsEvent(Scene scene, IList<IMoveable> moveables, string eventID, int interval_ms, int delay_ms) : base(eventID, interval_ms, delay_ms)
+        public UpdateWorldEntityPositionsEvent(WorldScene scene, IList<BaseEntity> entities, string eventID, int interval_ms, int delay_ms) : base(eventID, interval_ms, delay_ms)
         {
             _scene = scene;
-            _moveables = moveables;
+            _entities = entities;
         }
 
         protected override void Run(EventArgs args)
         {
-            foreach (var moveable in _moveables)
+            foreach (var moveable in _entities)
             {
-                moveable.Move(_scene);
+                var (canMove, direction) = moveable.CanMove(_scene);
+
+                if (canMove)
+                {
+                    moveable.Move(direction);
+                }
             }
         }
     }

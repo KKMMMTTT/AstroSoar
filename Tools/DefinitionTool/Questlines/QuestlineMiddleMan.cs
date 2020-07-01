@@ -35,7 +35,7 @@ namespace DefinitionTool.Questlines
             Directory.Delete(Globals.DefinitionPath + "questline/", true);
 
             foreach (var definition in this._definitions) {
-                definitionService.Save(definition.Name, definition, DefinitionType.Questline);
+                definitionService.SaveToAssets(definition.Name, definition, DefinitionType.Questline);
             }
         }
     }

@@ -35,7 +35,7 @@ namespace DefinitionTool.Conversations
             Directory.Delete(Globals.DefinitionPath + "conversation/", true);
 
             foreach (var definition in _definitions) {
-                definitionService.Save(definition.Name, definition, DefinitionType.Conversation);
+                definitionService.SaveToAssets(definition.Name, definition, DefinitionType.Conversation);
             }
         }
     }

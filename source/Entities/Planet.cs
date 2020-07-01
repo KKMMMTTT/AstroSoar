@@ -1,25 +1,39 @@
-﻿using Annex.Graphics;
+﻿using Annex.Data.Shared;
+using Annex.Graphics;
 using Annex.Graphics.Contexts;
-using Annex.Scenes.Components;
+using Game.Scenes.World;
 
 namespace Game.Entities
 {
-    public class Planet : BaseEntity, IDrawableObject
+    public class Planet : BaseEntity
     {
         private readonly TextureContext _textureContext;
 
-        public Planet(string filePath)
+        public Planet(string spritePath, Vector position)
         {
-            _textureContext = new TextureContext(filePath);
+            Width = 121;
+            Height = 106;
+            Position = position;
+            
+            _textureContext = new TextureContext(spritePath)
+            {
+                RenderPosition = Position
+            };
         }
 
-        public void Draw(ICanvas canvas)
+        public override void Draw(ICanvas canvas)
         {
             canvas.Draw(_textureContext);
         }
 
-        public override void Move(Scene worldScene)
+        public override (bool, Vector) CanMove(WorldScene worldScene)
         {
+            return (false, null);
+        }
+
+        public override void Move(Vector direction)
+        {
+            
         }
     }
 
