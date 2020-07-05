@@ -21,10 +21,13 @@ namespace Game.Definitions
             Directory.CreateDirectory(_destPath);
 
             foreach (var file in Directory.GetFiles(_sourcePath, "*.json", SearchOption.AllDirectories)) {
-                var fi = new FileInfo(file);
-                string folder = Path.Combine(_destPath, fi.Directory.Name);
-                Directory.CreateDirectory(folder);
-                File.Copy(file, Path.Combine(_destPath, fi.Directory.Name, fi.Name));
+
+                string relativeFilepath = file.Substring(this._sourcePath.Length);
+                string fullFilepath = Path.Combine(this._destPath, relativeFilepath); 
+                var fi = new FileInfo(fullFilepath);
+
+                Directory.CreateDirectory(fi.Directory.FullName);
+                File.Copy(file, fullFilepath);
             }
 #endif
         }
