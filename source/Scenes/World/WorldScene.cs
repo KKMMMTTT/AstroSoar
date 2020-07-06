@@ -6,20 +6,21 @@ using Annex.Scenes;
 using Game.Entities;
 using Game.Events;
 using System.Collections.Generic;
+using Game.Entities.Planets;
 
 namespace Game.Scenes.World
 {
     public class WorldScene : AstroSoarScene, ISceneWithPlayer
     {
-        private readonly IList<BaseEntity> _entities;
-        public Player? Player { get; set; }
+        private readonly IList<Entity> _entities;
+        public Player Player { get; set; }
 
         public WorldScene()
         {
-            _entities = new List<BaseEntity>()
+            Player = new Player();
+            _entities = new List<Entity>()
             {
-                //new Planet("buttons/no.png", Vector.Create(70, 70)),
-                new Planet("planets/planet_1.png", Vector.Create(100, 100))
+                new GreenPlanet("Planets/planet_1.png", Vector.Create(100, 100))
             };
 
             var entityPositionsEvent = new UpdateWorldEntityPositionsEvent(this, _entities, "update entity positions", 10, 0);
@@ -38,12 +39,12 @@ namespace Game.Scenes.World
             this._entities.Remove(this.Player!);
         }
 
-        public void AddEntity(BaseEntity entity)
+        public void AddEntity(Entity entity)
         {
             _entities.Add(entity);
         }
 
-        public IList<BaseEntity> GetEntities()
+        public IList<Entity> GetEntities()
         {
             return this._entities;
         }

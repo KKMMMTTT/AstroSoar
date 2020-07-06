@@ -8,7 +8,7 @@ namespace Game.Scenes
 {
     public class LoadGame : Scene, ISceneWithPlayer
     {
-        public Player? Player { get; set; }
+        public Player Player { get; set; }
 
         public LoadGame() {
             this.Player = AstroSoarServiceProvider.PlayerDefinitionService.LoadSave("player");
