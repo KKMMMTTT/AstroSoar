@@ -1,7 +1,7 @@
 ﻿using Annex;
 using Annex.Assets;
 using Game.Scenes.Demo;
-using Game.Scenes.World;
+using Game.Scenes.MainMenu;
 using System.IO;
 using static Annex.Paths;
 
@@ -27,7 +27,7 @@ namespace Game
                 }
             });
 
-            AnnexGame.Start<WorldScene>();
+            AnnexGame.Start<MainMenu>();
         }
     }
 }

@@ -13,11 +13,11 @@ namespace Game.Scenes.World
     public class WorldScene : AstroSoarScene, ISceneWithPlayer
     {
         private readonly IList<Entity> _entities;
+
         public Player Player { get; set; }
 
         public WorldScene()
         {
-            Player = new Player();
             _entities = new List<Entity>()
             {
                 new GreenPlanet("Planets/planet_1.png", Vector.Create(100, 100))

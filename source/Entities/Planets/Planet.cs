@@ -13,7 +13,7 @@ namespace Game.Entities.Planets
         {
             Width = 121;
             Height = 106;
-            Position = position;
+            Position.Set(position);
 
             _textureContext = new TextureContext(spritePath)
             {
