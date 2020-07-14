@@ -6,7 +6,7 @@ using Annex.Scenes.Components;
 
 namespace Game.Scenes
 {
-    public abstract class FirstPersonScene : Scene
+    public abstract class FirstPersonScene : AstroSoarScene
     {
         private readonly String _titlebarCaption;
 

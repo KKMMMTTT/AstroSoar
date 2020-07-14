@@ -8,7 +8,7 @@ namespace Game.Scenes
 {
     public class NewGame : Scene, ISceneWithPlayer
     {
-        public Player? Player { get; set; }
+        public Player Player { get; set; }
 
         public NewGame() {
             this.Player = new Player();

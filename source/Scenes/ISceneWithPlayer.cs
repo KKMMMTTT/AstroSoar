@@ -4,6 +4,6 @@ namespace Game.Scenes
 {
     public interface ISceneWithPlayer
     {
-        public Player? Player { get; set; }
+        Player Player { get; set; }
     }
 }
