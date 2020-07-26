@@ -6,6 +6,7 @@
     <UseWPF>true</UseWPF>
     <Platforms>AnyCPU;x64</Platforms>
     <StartupObject>DefinitionTool.Globals</StartupObject>
+    <LangVersion>8</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
