@@ -10,8 +10,16 @@ namespace Game.Entities
     {
         [JsonIgnore]
         public Vector Position { get; set; }
-        public float Width { get; set; }
-        public float Height { get; set; }
+        public Vector Size { get; set; }
+
+        public float Width {
+            get => this.Size.X;
+            set => this.Size.X = value;
+        }
+        public float Height {
+            get => this.Size.Y;
+            set => this.Size.Y = value;
+        }
 
         public float SERIALIZATION_X { get => this.Position.X; set => this.Position.X = value; }
         public float SERIALIZATION_Y { get => this.Position.Y; set => this.Position.Y = value; }
@@ -20,6 +28,7 @@ namespace Game.Entities
         protected BaseEntity()
         {
             Position = Vector.Create();
+            Size = Vector.Create();
         }
 
         public abstract void Draw(ICanvas canvas);

@@ -9,11 +9,9 @@ namespace Game.Entities.Planets
     {
         private readonly TextureContext _textureContext;
 
-        protected Planet(string spritePath, Vector position)
+        protected Planet(string spritePath, Vector position) : base(121, 106)
         {
-            Width = 121;
-            Height = 106;
-            Position = position;
+            Position.Set(position);
 
             _textureContext = new TextureContext(spritePath)
             {

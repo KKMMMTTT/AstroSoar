@@ -5,6 +5,7 @@ using Annex.Graphics.Contexts;
 using Annex.Scenes;
 using Game.Questlines;
 using System;
+using System.Collections.Generic;
 
 namespace Game.Entities
 {
@@ -16,14 +17,12 @@ namespace Game.Entities
         private readonly TextureContext _textureContext;
 
         public Player() : this("character.png") {
-
+            IList<int> x = new List<int>();
         }
 
-        public Player(string spritePath)
+        public Player(string spritePath) : base(50, 59)
         {
             this.QuestlineJournal = new QuestlineJournal();
-            Width = 50;
-            Height = 59;
 
             var renderSize = Vector.Create(Width, Height);
 

@@ -4,9 +4,9 @@ using Annex.Events;
 using Annex.Graphics;
 using Annex.Scenes;
 using Game.Entities;
+using Game.Entities.Planets;
 using Game.Events;
 using System.Collections.Generic;
-using Game.Entities.Planets;
 
 namespace Game.Scenes.World
 {
@@ -20,6 +20,7 @@ namespace Game.Scenes.World
             Player = new Player();
             _entities = new List<Entity>()
             {
+                new NewspaperStand(Vector.Create(200, 200)),
                 new GreenPlanet("Planets/planet_1.png", Vector.Create(100, 100))
             };
 
