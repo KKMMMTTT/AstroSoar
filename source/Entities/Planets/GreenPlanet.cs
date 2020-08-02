@@ -12,7 +12,10 @@ namespace Game.Entities.Planets
 
         public override void OnCollision(CollisionEntity entity)
         {
-            ServiceProvider.SceneService.LoadScene<GreenScreen>();
+            if (entity is Player)
+            {
+                ServiceProvider.SceneService.LoadScene<GreenScreen>();
+            }
         }
     }
 }
